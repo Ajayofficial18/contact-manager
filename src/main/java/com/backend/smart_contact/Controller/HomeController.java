@@ -3,6 +3,7 @@ package com.backend.smart_contact.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.backend.smart_contact.Entities.User;
 import com.backend.smart_contact.HelperMessage.Message;
 import com.backend.smart_contact.Repository.UserRepository;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -44,43 +47,35 @@ public class HomeController {
 
     // do_registerHandler
     @RequestMapping(value = "/do_register", method = RequestMethod.POST)
-    public String do_registerHandler(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model, RedirectAttributes redirectAttributes){
+    public String do_registerHandler(@Valid @ModelAttribute("user") User user, BindingResult result, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model, RedirectAttributes redirectAttributes){
 
         try {
+
+            if (userRepositoryObject.findByEmail(user.getEmail()) != null) {
+                result.rejectValue("email", "error.user", "An account with this email already exists.");
+            }
 
             if(!agreement){
                 System.out.println("you have not agreed the terms and condtions");
                 throw new Exception("you have not agreed the terms and condtions");
             }
     
+            if (result.hasErrors()) {
+                model.addAttribute("user", user);
+                return "signup"; // Return back to the form if validation fails
+            }
+
             user.setRole("Role_user");
             user.setEnabled(true);
     
             userRepositoryObject.save(user);
-
-            // =====old code=======
-
-            // System.out.println("Agreement "+agreement);
-            // System.out.println("Model "+model);
-            // System.out.println("User "+user);
-            // model.addAttribute("user", new User());
-            // session.setAttribute("message", new Message("Successfully Registered !!", "alert-success"));
-
             model.addAttribute("user", new User());
             // Add success message as a flash attribute
             redirectAttributes.addFlashAttribute("message", new Message("Successfully Registered !!", "alert-success"));
-
             return "redirect:/signup";
             
         } catch (Exception e) {
             e.printStackTrace();
-            
-            // =====old code=======
-
-            // model.addAttribute("user", user);
-            // session.setAttribute("message", new Message("Something went Wrong !!", "alert-error"));
-            // return "signup";
-
             model.addAttribute("user", user);
             // Add error message as a flash attribute
             redirectAttributes.addFlashAttribute("message", new Message("Something went Wrong !!", "alert-danger"));

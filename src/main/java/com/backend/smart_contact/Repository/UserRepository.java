@@ -6,4 +6,6 @@ import com.backend.smart_contact.Entities.User;
 
 public interface UserRepository extends CrudRepository<User,Integer>{
 
+    Object findByEmail(String email);
+
 }

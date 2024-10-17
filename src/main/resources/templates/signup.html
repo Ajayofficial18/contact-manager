@@ -36,6 +36,7 @@
 
               <!-- Form Fields -->
               <form
+              novalidate
                 th:action="@{/do_register}"
                 method="post"
                 th:object="${user}"
@@ -48,11 +49,14 @@
                     name="name"
                     type="text"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
                     id="name_field"
                     placeholder="Enter Here"
                     required
                     th:value="${user.name}"
                   />
+                  <!-- Error Message -->
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:each="e : ${#fields.errors('name')}" th:text="${e}"></div>
                 </div>
 
                 <!-- email field -->
@@ -62,11 +66,14 @@
                     name="email"
                     type="email"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
                     id="email_field"
                     placeholder="Enter Here"
                     required
                     th:value="${user.email}"
                   />
+                  <!-- Error Message -->
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
                 </div>
 
                 <!-- password field -->
