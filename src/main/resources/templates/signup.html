@@ -1,107 +1,131 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="base::Layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SignUp</title>
-</head>
-<body>
+  </head>
+  <body>
     <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <div class="my-card mt-2">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="my-card mt-2">
 
-                        <!-- Alert message -->
-                        <div th:if="${message}" th:classappend="${message.type}" class="alert" role="alert">
-                            <p th:text="${message.content}"></p>
-                        </div>
+              <!-- Alert message -->
+              <div
+                th:if="${message}"
+                th:classappend="${message.type}"
+                class="alert"
+                role="alert"
+              >
+                <p th:text="${message.content}"></p>
+              </div>
 
-                        <!-- Form Icon -->
-                        <div class="container text-center">
-                            <img style="width: 30px;" th:src="@{/img/signup.png}" alt="">
-                        </div>         
+              <!-- Form Icon -->
+              <div class="container text-center">
+                <img style="width: 30px" th:src="@{/img/signup.png}" alt="" />
+              </div>
 
-                        <!-- Form Heading Register Here -->
-                        <h1 class="text-center">Register Here!</h1>
+              <!-- Form Heading Register Here -->
+              <h1 class="text-center">Register Here!</h1>
 
-                        <!-- Form Fields -->
-                        <form th:action="@{/do_register}" method="post" th:object="${user}">
+              <!-- Form Fields -->
+              <form
+                th:action="@{/do_register}"
+                method="post"
+                th:object="${user}"
+              >
 
-                            <div class="form-group">
-                                <label for="name_field">Name</label>
-                                <input 
-                                    name="name"
-                                    type="text" 
-                                    class="form-control" 
-                                    id="name_field" 
-                                    placeholder="Enter Here"
-                                    required
-                                    th:value="${user.name}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email_field">Email</label>
-                                <input 
-                                    name="email"
-                                    type="email" 
-                                    class="form-control" 
-                                    id="email_field" 
-                                    placeholder="Enter Here"
-                                    required
-                                    th:value="${user.email}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password_field">Password</label>
-                                <input 
-                                    name="password"
-                                    type="password" 
-                                    class="form-control" 
-                                    id="password_field" 
-                                    placeholder="Enter Here"
-                                    required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="about_field">About</label>
-                                <textarea 
-                                    name="about" 
-                                    id="about_field"
-                                    placeholder="Enter Something About Yourself" 
-                                    rows="4" 
-                                    class="form-control"
-                                    th:text="${user.about}"></textarea>
-                            </div>
-
-                            <div class="form-group form-check">
-                                <input 
-                                    type="checkbox"
-                                    name="agreement"
-                                    id="agreement"
-                                    class="form-check-input"
-                                    >
-                                <label for="agreement">Accept Terms and Conditions</label>
-                            </div>
-
-                            <div class="container">
-                                <button 
-                                    class="btn bg-primary text-white"
-                                    type="submit">
-                                    Submit
-                                </button>
-
-                                <button 
-                                    class="btn bg-primary text-white" 
-                                    type="reset">
-                                    Reset
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                <!-- name field -->
+                <div class="form-group">
+                  <label for="name_field">Name</label>
+                  <input
+                    name="name"
+                    type="text"
+                    class="form-control"
+                    id="name_field"
+                    placeholder="Enter Here"
+                    required
+                    th:value="${user.name}"
+                  />
                 </div>
+
+                <!-- email field -->
+                <div class="form-group">
+                  <label for="email_field">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    class="form-control"
+                    id="email_field"
+                    placeholder="Enter Here"
+                    required
+                    th:value="${user.email}"
+                  />
+                </div>
+
+                <!-- password field -->
+                <div class="form-group">
+                  <label for="password_field">Password</label>
+                  <input
+                    name="password"
+                    type="password"
+                    class="form-control"
+                    id="password_field"
+                    placeholder="Enter Here"
+                    required
+                  />
+                </div>
+
+                <!-- about field -->
+                <div class="form-group">
+                  <label for="about_field">About</label>
+                  <textarea
+                    name="about"
+                    id="about_field"
+                    placeholder="Enter Something About Yourself"
+                    rows="4"
+                    class="form-control"
+                    th:text="${user.about}"
+                  ></textarea>
+                </div>
+
+                <!-- terms and agreement -->
+                <div class="form-group form-check">
+                  <input
+                    type="checkbox"
+                    name="agreement"
+                    id="agreement"
+                    class="form-check-input"
+                  />
+                  <label for="agreement">Accept Terms and Conditions</label>
+                </div>
+
+                <!-- buttons submit and reset -->
+                <div class="container">
+                  <button 
+                  class="btn bg-primary text-white"
+                  type="submit">
+                  Submit
+                  </button>
+
+                  <button 
+                  class="btn bg-primary text-white" 
+                  type="reset">
+                  Reset
+                  </button>
+              </div>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </section>
-</body>
+
+  </body>
 </html>

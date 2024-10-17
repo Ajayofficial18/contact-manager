@@ -13,7 +13,6 @@ import com.backend.smart_contact.Entities.User;
 import com.backend.smart_contact.HelperMessage.Message;
 import com.backend.smart_contact.Repository.UserRepository;
 
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
@@ -57,7 +56,7 @@ public class HomeController {
             user.setRole("Role_user");
             user.setEnabled(true);
     
-            User result = userRepositoryObject.save(user);
+            userRepositoryObject.save(user);
 
             // =====old code=======
 
@@ -90,6 +89,11 @@ public class HomeController {
         
     }
 
+    // LoginHandler
+    @RequestMapping("/login")
+    public String LoginHandler(){
+        return "login";
+    }
     
 
 }
