@@ -36,7 +36,7 @@
 
               <!-- Form Fields -->
               <form
-              novalidate
+                novalidate  
                 th:action="@{/do_register}"
                 method="post"
                 th:object="${user}"
@@ -83,10 +83,13 @@
                     name="password"
                     type="password"
                     class="form-control"
+                    th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
                     id="password_field"
                     placeholder="Enter Here"
                     required
                   />
+                  <!-- Error Message -->
+                  <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
                 </div>
 
                 <!-- about field -->

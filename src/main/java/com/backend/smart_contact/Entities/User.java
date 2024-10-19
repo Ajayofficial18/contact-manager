@@ -23,19 +23,26 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 20, message = "Name must be between 3 and 20 characters")
     private String name;
+
     @Column(unique = true)
     @NotBlank(message = "Email is required")
     @Email(message = "Email should be valid")
     private String email;
+
     @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password should be at least 6 characters long")
+    @Size(min = 4, message = "Password should be at least 4 characters long")
     private String password;
+
     private String role;
+
     private boolean enabled;
+
     private String imageUrl;
+    
     @Column(length = 500 )
     private String about;
 
