@@ -1,31 +1,31 @@
 package com.backend.smart_contact.Controller;
 
+import java.security.Principal;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-// @Controller
-// @RequestMapping("/user")
-// public class UserController {
+import com.backend.smart_contact.Entities.User;
+import com.backend.smart_contact.Repository.UserRepository;
 
-//     @PostMapping("/index")
-//     public String dashboardHandler(){
-//         return "normal/dashboard";
-//     }
 
-// }
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping("/index")
-    public String dashboardHandler(){
-        return "normal/dashboard";
-    }
+    @Autowired
+    private UserRepository userRepoObj;
 
-    @PostMapping("/index")
-    public String dashboardHandlerPost(){
+    // dashboard handler
+    @RequestMapping("/index")
+    public String dashboardHandler(Model model, Principal principal){
+
+        String username=principal.getName();
+        User user = userRepoObj.getUserByUserName(username);
+        model.addAttribute("Title", "Dashboard-ContactManager");
+        model.addAttribute("user", user);
         return "normal/dashboard";
     }
 

@@ -35,24 +35,24 @@ public class MyConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/user/**").authenticated()  // Protect URLs starting with /user
-            .anyRequest().permitAll()  // Allow all other URLs without authentication
-            .and()
-            .formLogin()
-            .loginPage("/signin")  // Custom login page
-            .loginProcessingUrl("/doLogin")
-            .defaultSuccessUrl("/user/index", true)  // Redirect after successful login
-            .and()
-            .logout()
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout")
-            .invalidateHttpSession(true)
-            .deleteCookies("JSESSIONID");
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/user/**").authenticated()  // Protect URLs starting with /user
+                        .anyRequest().permitAll())
+                .formLogin(login -> login
+                        .loginPage("/signin")  // Custom login page
+                        .loginProcessingUrl("/doLogin")
+                        .defaultSuccessUrl("/user/index", true)  // Redirect after successful login
+                        .failureUrl("/signin?error=true"))
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/signin?logout")  // Updated logout URL to /signin
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID"));
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
