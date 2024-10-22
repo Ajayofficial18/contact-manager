@@ -31,21 +31,21 @@ public class HomeController {
     // homeHandler
     @RequestMapping("/")
     public String homeHandler(Model model){
-        model.addAttribute("Title", "HomePage-ContactManager");
+        model.addAttribute("Title", "Home - ContactManager");
         return "home";
     }
 
     // aboutHandler
     @RequestMapping("/about")
     public String aboutHandler(Model model){
-        model.addAttribute("Title", "AboutPage-ContactManager");
+        model.addAttribute("Title", "About - ContactManager");
         return "about";
     }
 
     // signUpHandler
     @RequestMapping("/signup")
     public String signUpHandler(Model model){
-        model.addAttribute("Title", "SignUpPage-ContactManager");
+        model.addAttribute("Title", "SignUp - ContactManager");
         model.addAttribute("user", new User());
         return "signup";
     }
@@ -93,7 +93,7 @@ public class HomeController {
     // LoginPageHandler
     @GetMapping("/signin")
     public String loginHandler(Model model){
-        model.addAttribute("Title", "Login-Page");
+        model.addAttribute("Title", "Login-ContactManager");
         return "login";
     }
 
