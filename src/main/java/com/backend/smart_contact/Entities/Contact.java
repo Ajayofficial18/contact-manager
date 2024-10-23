@@ -128,7 +128,6 @@ public class Contact {
             ", phone='" + getPhone() + "'" +
             ", image='" + getImage() + "'" +
             ", description='" + getDescription() + "'" +
-            ", user='" + getUser() + "'" +
             "}";
     }
 

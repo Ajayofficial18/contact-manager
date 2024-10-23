@@ -153,7 +153,6 @@ public class User {
             ", enabled='" + isEnabled() + "'" +
             ", imageUrl='" + getImageUrl() + "'" +
             ", about='" + getAbout() + "'" +
-            ", contacts='" + getContacts() + "'" +
             "}";
     }
 

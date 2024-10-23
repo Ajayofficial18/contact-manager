@@ -19,8 +19,14 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous"
     />
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 
@@ -69,19 +75,39 @@
     <!-- sidebar -->
     <div class="sidebar mt-2">
       <span onclick="toggleSidebar()" class="crossbttn">&times;</span>
-      <a th:href="@{/user/index}" href="#" class="item"> <i class="fa-solid fa-house"></i> Home </a>
-      <a href="#" class="item"> <i class="fa-solid fa-address-book"></i> View Contacts</a>
-      <a th:href="@{/user/add-contact}" href="#" class="item"> <i class="fa-solid fa-pen"></i> Add Contact</a>
-      <a href="#" class="item"> <i class="fa-solid fa-user"></i> Your profile</a>
+      <a th:href="@{/user/index}" href="#" class="item">
+        <i class="fa-solid fa-house"></i> Home
+      </a>
+      <a href="#" class="item">
+        <i class="fa-solid fa-address-book"></i> View Contacts</a
+      >
+      <a th:href="@{/user/add-contact}" href="#" class="item">
+        <i class="fa-solid fa-pen"></i> Add Contact</a
+      >
+      <a href="#" class="item">
+        <i class="fa-solid fa-user"></i> Your profile</a
+      >
       <a href="#" class="item"> <i class="fa-solid fa-gears"></i> Settings</a>
-      <a th:href="@{/logout}" href="#" class="item"> <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <a th:href="@{/logout}" href="#" class="item">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout</a
+      >
       <div class="divider"></div>
     </div>
 
     <div class="content mt-5">
-
+      <!-- togglebar -->
       <i onclick="toggleSidebar()" class="fa-solid fa-bars mt-3"></i>
 
+      <!-- alert box -->
+      <div th:if="${message}" class="container">
+        <div
+          th:class="'alert text-center alert-' + (${alertType} == 'success' ? 'success' : 'danger')"
+          role="alert"
+        >
+          <span th:text="${message}"></span>
+        </div>
+      </div>
+      <!-- main content that is going to replace -->
       <div th:replace="${content}"></div>
     </div>
 
