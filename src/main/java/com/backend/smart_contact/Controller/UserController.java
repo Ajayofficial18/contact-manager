@@ -21,10 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.backend.smart_contact.Entities.Contact;
 import com.backend.smart_contact.Entities.User;
-import com.backend.smart_contact.HelperMessage.Message;
 import com.backend.smart_contact.Repository.UserRepository;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -96,6 +93,14 @@ public class UserController {
         }
 
         return "redirect:/user/add-contact"; // Redirect after processing the form
+    }
+
+
+    // show or view contacts
+    @GetMapping("/show-contacts")
+    public String viewContactsHandler(Model m){
+        m.addAttribute("Tittle", "All Contacts - ContactManager");
+        return "normal/show_contacts";
     }
 
 }
