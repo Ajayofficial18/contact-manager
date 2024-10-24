@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.backend.smart_contact.Entities.Contact;
 import com.backend.smart_contact.Entities.User;
+import com.backend.smart_contact.Repository.ContactRepository;
 import com.backend.smart_contact.Repository.UserRepository;
 
 @Controller
@@ -29,6 +33,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepoObj;
+
+    @Autowired
+    private ContactRepository contactRepoObj;
 
     // common code for the urls
     @ModelAttribute
@@ -64,6 +71,7 @@ public class UserController {
             // Processing and uploading file
             if (file.isEmpty()) {
                 System.out.println("file is empty");
+                contactData.setImage("/img/contact.jpg");
             } else {
                 contactData.setImage(file.getOriginalFilename());
                 File saveFile = new ClassPathResource("static/img").getFile();
@@ -98,9 +106,29 @@ public class UserController {
 
     // show or view contacts
     @GetMapping("/show-contacts")
-    public String viewContactsHandler(Model m){
+    public String viewContactsHandler(Model m, Principal principal){
+        
         m.addAttribute("Tittle", "All Contacts - ContactManager");
+        // we need to send all the contact of this user
+        String username = principal.getName();
+        User user = this.userRepoObj.getUserByUserName(username);
+        List<Contact> allContacts = this.contactRepoObj.findContactByUser(user.getId());
+        m.addAttribute("allContacts", allContacts);
+
         return "normal/show_contacts";
+    }
+
+
+    // showing particular contact
+    @RequestMapping("/{cId}/contact")
+    public String showContactDetail(@PathVariable("cId") Integer cId, Model m){
+
+        Optional<Contact> optional = contactRepoObj.findById(cId);
+        Contact contact = optional.get();
+
+        m.addAttribute("contact", contact);
+        m.addAttribute("Tittle", "All Contacts - ContactManager");
+        return "normal/contact_detail";
     }
 
 }

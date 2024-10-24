@@ -89,3 +89,11 @@ body{
   font-size: 36px;
   cursor: pointer;
 }
+
+/* setting image on all contact */
+.my_profile_picture{
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
