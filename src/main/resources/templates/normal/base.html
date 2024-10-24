@@ -28,6 +28,14 @@
       referrerpolicy="no-referrer"
     />
 
+    <!-- style of alert buttons from sweetalert2 -->
+    <style>
+      .swal2-actions .swal2-confirm,
+      .swal2-actions .swal2-cancel {
+          margin: 0 10px; /* Adjust the space between buttons */
+      }
+    </style>
+
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 
     <title th:text="${Tittle}">Base template</title>
@@ -107,6 +115,7 @@
           <span th:text="${message}"></span>
         </div>
       </div>
+
       <!-- main content that is going to replace -->
       <div th:replace="${content}"></div>
     </div>
@@ -128,6 +137,54 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script th:inline="javascript">
+        function confirmDelete(contactId) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: "btn btn-success btn-sm mr-1",
+                    cancelButton: "btn btn-danger btn-sm"
+                },
+                buttonsStyling: false
+            });
+
+            swalWithBootstrapButtons.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the deletion if confirmed
+                    window.location.href = "/user/delete/" + contactId;
+                    
+                    // Show success alert
+                    swalWithBootstrapButtons.fire({
+                        title: "Deleted!",
+                        text: "Your contact has been deleted.",
+                        icon: "success"
+                    });
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    // Show cancel alert
+                    swalWithBootstrapButtons.fire({
+                        title: "Cancelled",
+                        text: "Your contact is safe :)",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    </script>
+
+
 
     <script th:src="@{/js/script.js}"></script>
   </body>

@@ -24,8 +24,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.backend.smart_contact.Entities.Contact;
 import com.backend.smart_contact.Entities.User;
+import com.backend.smart_contact.HelperMessage.Message;
 import com.backend.smart_contact.Repository.ContactRepository;
 import com.backend.smart_contact.Repository.UserRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -71,7 +74,7 @@ public class UserController {
             // Processing and uploading file
             if (file.isEmpty()) {
                 System.out.println("file is empty");
-                contactData.setImage("/img/contact.jpg");
+                contactData.setImage("contact.png");
             } else {
                 contactData.setImage(file.getOriginalFilename());
                 File saveFile = new ClassPathResource("static/img").getFile();
@@ -103,7 +106,6 @@ public class UserController {
         return "redirect:/user/add-contact"; // Redirect after processing the form
     }
 
-
     // show or view contacts
     @GetMapping("/show-contacts")
     public String viewContactsHandler(Model m, Principal principal){
@@ -118,7 +120,6 @@ public class UserController {
         return "normal/show_contacts";
     }
 
-
     // showing particular contact
     @RequestMapping("/{cId}/contact")
     public String showContactDetail(@PathVariable("cId") Integer cId, Model m){
@@ -130,5 +131,29 @@ public class UserController {
         m.addAttribute("Tittle", "All Contacts - ContactManager");
         return "normal/contact_detail";
     }
+
+    // Deleting a particular contact
+    @GetMapping("/delete/{cId}")
+    public String deleteContact(@PathVariable("cId") Integer cId, RedirectAttributes redirectAttributes) {
+
+        Optional<Contact> optional = this.contactRepoObj.findById(cId);
+        if(optional.isPresent()) {
+            Contact contact = optional.get();
+            // Perform the deletion
+            this.contactRepoObj.delete(contact);
+
+            // Set flash message after successful deletion
+            redirectAttributes.addFlashAttribute("message", "Contact Deleted Successfully...");
+            redirectAttributes.addFlashAttribute("alertType", "success");
+        } else {
+            // Handle case where the contact is not found
+            redirectAttributes.addFlashAttribute("message", "Contact not found!");
+            redirectAttributes.addFlashAttribute("alertType", "danger");
+        }
+
+        // Redirect back to the contact list
+        return "redirect:/user/show-contacts";
+    }
+
 
 }
