@@ -24,11 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.backend.smart_contact.Entities.Contact;
 import com.backend.smart_contact.Entities.User;
-import com.backend.smart_contact.HelperMessage.Message;
 import com.backend.smart_contact.Repository.ContactRepository;
 import com.backend.smart_contact.Repository.UserRepository;
-
-import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")
@@ -155,5 +152,61 @@ public class UserController {
         return "redirect:/user/show-contacts";
     }
 
+    // updating a contact handler
+    @GetMapping("/updateContact/{cId}")
+    public String updateHandlerSupport(@PathVariable("cId") int cId, Model model) {
+        Optional<Contact> contactOptional = contactRepoObj.findById(cId);
+        if (contactOptional.isPresent()) {
+            model.addAttribute("contact", contactOptional.get());
+            model.addAttribute("Title", "Update Contact - ContactManager");
+            return "normal/update_contact"; // Make sure this template exists
+        } else {
+            // Handle case where the contact is not found
+            return "redirect:/user/show-contacts"; // Redirect if contact is not found
+        }
+    }
+
+    // process-update handler
+    @PostMapping("/update-contact/{cId}")
+    public String updateContact(@PathVariable("cId") int cId, @ModelAttribute Contact contactdata, @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes) {
+        Optional<Contact> optional = this.contactRepoObj.findById(cId);
+        
+        if (optional.isPresent()) {
+            Contact contact = optional.get();
+            // Update logic here
+            contact.setName(contactdata.getName());
+            contact.setSecondName(contactdata.getSecondName());
+            contact.setWork(contactdata.getWork());
+            contact.setEmail(contactdata.getEmail());
+            contact.setPhone(contactdata.getPhone());
+            contact.setImage(contactdata.getImage());// this is not working
+            try {
+                if (file.isEmpty()) {
+                    System.out.println("file is empty");
+                    contactdata.setImage("contact.png");
+                } else {
+                    contactdata.setImage(file.getOriginalFilename());
+                    File saveFile = new ClassPathResource("static/img").getFile();
+                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("img is uploaded");
+                } 
+            } 
+            catch (Exception e) {
+                System.out.println("Error : " + e.getMessage());
+                e.printStackTrace();
+            }
+            contact.setImage(contactdata.getImage());
+            contact.setDescription(contactdata.getDescription());
+            this.contactRepoObj.save(contact);
+
+            redirectAttributes.addFlashAttribute("message", "Contact updated Successfully...");
+            redirectAttributes.addFlashAttribute("alertType", "success");
+        } else {
+            redirectAttributes.addFlashAttribute("message", "Contact not found!");
+            redirectAttributes.addFlashAttribute("alertType", "danger");
+        }
+        return "redirect:/user/show-contacts";
+    }
 
 }
