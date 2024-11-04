@@ -131,7 +131,7 @@ public class UserController {
 
     // Deleting a particular contact
     @GetMapping("/delete/{cId}")
-    public String deleteContact(@PathVariable("cId") Integer cId, RedirectAttributes redirectAttributes) {
+    public String deleteContact(@PathVariable("cId") Integer cId) {
 
         Optional<Contact> optional = this.contactRepoObj.findById(cId);
         if(optional.isPresent()) {
@@ -140,12 +140,12 @@ public class UserController {
             this.contactRepoObj.delete(contact);
 
             // Set flash message after successful deletion
-            redirectAttributes.addFlashAttribute("message", "Contact Deleted Successfully...");
-            redirectAttributes.addFlashAttribute("alertType", "success");
+            // redirectAttributes.addFlashAttribute("message", "Contact Deleted Successfully...");
+            // redirectAttributes.addFlashAttribute("alertType", "success");
         } else {
             // Handle case where the contact is not found
-            redirectAttributes.addFlashAttribute("message", "Contact not found!");
-            redirectAttributes.addFlashAttribute("alertType", "danger");
+            // redirectAttributes.addFlashAttribute("message", "Contact not found!");
+            // redirectAttributes.addFlashAttribute("alertType", "danger");
         }
 
         // Redirect back to the contact list
