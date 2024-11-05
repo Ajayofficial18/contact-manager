@@ -1,6 +1,6 @@
 # Contact Management System
 
-A **Spring Boot** web application for managing personal and business contacts, built with **Thymeleaf** for the front-end. The application allows users to register, log in, and manage their contacts with ease. Future enhancements will include **Spring Security** for authentication and authorization.
+**Contact Manager** is a Java-based **Spring Boot** application designed to manage personal and professional contacts. With a user-friendly interface powered by **Thymeleaf**, it allows users to securely log in and out using **Spring Security**. The application supports full CRUD functionality, enabling users to add, update, view, and delete contacts with ease. Perfect for efficiently managing contact information,  This project showcases a seamless combination of backend security and frontend interactivity, making it a robust solution for contact management.
 
 ## Features
 
