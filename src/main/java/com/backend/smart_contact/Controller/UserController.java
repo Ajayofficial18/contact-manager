@@ -100,7 +100,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("alertType", "danger");
         }
 
-        return "redirect:/user/add-contact"; // Redirect after processing the form
+        return "redirect:/user/show-contacts"; // Redirect after processing the form
     }
 
     // show or view contacts
@@ -209,4 +209,10 @@ public class UserController {
         return "redirect:/user/show-contacts";
     }
 
+    // profile handler
+    @GetMapping("/profile")
+    public String profileHandler(Model m){
+        m.addAttribute("Tittle", "User Profile");
+        return "normal/profile";
+    }
 }
