@@ -125,7 +125,7 @@ public class UserController {
         Contact contact = optional.get();
 
         m.addAttribute("contact", contact);
-        m.addAttribute("Tittle", "All Contacts - ContactManager");
+        m.addAttribute("Tittle", "Contact - ContactManager");
         return "normal/contact_detail";
     }
 
@@ -158,7 +158,7 @@ public class UserController {
         Optional<Contact> contactOptional = contactRepoObj.findById(cId);
         if (contactOptional.isPresent()) {
             model.addAttribute("contact", contactOptional.get());
-            model.addAttribute("Title", "Update Contact - ContactManager");
+            model.addAttribute("Tittle", "Update Contact - ContactManager");
             return "normal/update_contact"; // Make sure this template exists
         } else {
             // Handle case where the contact is not found
@@ -214,5 +214,19 @@ public class UserController {
     public String profileHandler(Model m){
         m.addAttribute("Tittle", "User Profile");
         return "normal/profile";
+    }
+    
+    // update or edit user handler
+    @GetMapping("/updateUser/{id}")
+    public String updateUserHandler(@PathVariable("id") int id, Model m){
+        Optional<User> userOptional=userRepoObj.findById(id);
+        if(userOptional.isPresent()){
+            m.addAttribute("user", userOptional.get());
+            m.addAttribute("Tittle", "Edit User");
+            return "normal/editProfile";
+        }else {
+            // Handle case where the user is not found
+            return "redirect:/user/profile"; // Redirect if user is not found
+        }
     }
 }

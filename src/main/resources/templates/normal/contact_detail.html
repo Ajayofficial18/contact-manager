@@ -42,7 +42,7 @@
                     </table>
                     <!-- description -->
                     <div class="description">
-                    <th:block th:utext="${contact.description}"></th:block>
+                        <th:block th:utext="${contact.description}"></th:block>
                     </div>
                     <!-- buttons for deletion and updatation -->
                     <button class="btn btn-danger btn-sm mt-3" th:onclick="'confirmDelete(' + ${contact.cId} + ')'">Delete</button>

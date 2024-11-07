@@ -7,7 +7,7 @@
 </head>
 <body>
     <Section>
-        <div class="container">
+        <div class="container text-center">
 
             <div class="card">
 
@@ -45,6 +45,12 @@
                                 </tr>
                         </tbody>
                     </table>
+
+                    <div>
+                        <button class="btn btn-danger btn-sm mt-3">Back</button>
+                        <a th:href="@{'/user/updateUser/' + ${user.id}}" class="btn btn-success btn-sm mt-3">Edit</a>
+                    </div>
+
                 </div>
             </div>
         </div>

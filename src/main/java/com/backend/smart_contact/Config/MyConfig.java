@@ -43,7 +43,7 @@ public class MyConfig {
                         .loginPage("/signin")  // Custom login page
                         .loginProcessingUrl("/doLogin")
                         .defaultSuccessUrl("/user/index", true)  // Redirect after successful login
-                        .failureUrl("/signin?error=true"))
+                        .failureUrl("/signin?error=true"))  // in case some error comes or authentification fails
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/signin?logout")  // Updated logout URL to /signin

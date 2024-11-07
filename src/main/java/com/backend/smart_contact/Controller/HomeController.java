@@ -31,21 +31,21 @@ public class HomeController {
     // homeHandler
     @RequestMapping("/")
     public String homeHandler(Model model){
-        model.addAttribute("Title", "Home - ContactManager");
+        model.addAttribute("Tittle", "Home - ContactManager");
         return "home";
     }
 
     // aboutHandler
     @RequestMapping("/about")
     public String aboutHandler(Model model){
-        model.addAttribute("Title", "About - ContactManager");
+        model.addAttribute("Tittle", "About - ContactManager");
         return "about";
     }
 
     // signUpHandler
     @RequestMapping("/signup")
     public String signUpHandler(Model model){
-        model.addAttribute("Title", "SignUp - ContactManager");
+        model.addAttribute("Tittle", "SignUp - ContactManager");
         model.addAttribute("user", new User());
         return "signup";
     }
@@ -72,7 +72,7 @@ public class HomeController {
 
             user.setRole("ROLE_USER");
             user.setEnabled(true);
-            user.setImageUrl("default.png"); 
+            user.setImageUrl("contact.png"); 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
     
             userRepositoryObject.save(user);
@@ -91,10 +91,10 @@ public class HomeController {
         
     }
 
-    // LoginPageHandler
+    // Custom LoginPageHandler
     @GetMapping("/signin")
     public String loginHandler(Model model){
-        model.addAttribute("Title", "Login-ContactManager");
+        model.addAttribute("Tittle", "Login-ContactManager");
         return "login";
     }
 
