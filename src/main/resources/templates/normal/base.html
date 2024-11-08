@@ -60,21 +60,25 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-uppercase">
-          <li class="nav-item active">
+        <ul class="navbar-nav ml-auto ">
+          <li class="nav-item ">
             <a class="nav-link" th:href="@{/}"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
 
           <li class="nav-item">
-            <a class="nav-link disabled" href="#"
+            <a class="nav-link" th:href="@{/about}">About</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link " th:href="@{/user/profile}" href="#"
               ><span th:text="${user.name}"></span
             ></a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link disabled" th:href="@{/logout}">logout</a>
+            <a class="nav-link " th:href="@{/logout}">logout</a>
           </li>
         </ul>
       </div>
@@ -83,22 +87,24 @@
     <!-- sidebar -->
     <div class="sidebar mt-2">
       <span onclick="toggleSidebar()" class="crossbttn">&times;</span>
+
       <a th:href="@{/user/index}" href="#" class="item">
-        <i class="fa-solid fa-house"></i> Dashboard
-      </a>
-      <a th:href="@{/user/show-contacts}" href="#" class="item">
-        <i class="fa-solid fa-address-book"></i> View Contacts</a
-      >
-      <a th:href="@{/user/add-contact}" href="#" class="item">
-        <i class="fa-solid fa-pen"></i> Add Contact</a
-      >
+        <i class="fa-solid fa-house"></i> Dashboard</a>
+
       <a th:href="@{/user/profile}" href="#" class="item">
-        <i class="fa-solid fa-user"></i> Your profile</a
-      >
+        <i class="fa-solid fa-user"></i> My profile</a>
+
+      <a th:href="@{/user/show-contacts}" href="#" class="item">
+        <i class="fa-solid fa-address-book"></i> View Contacts</a>
+
+      <a th:href="@{/user/add-contact}" href="#" class="item">
+        <i class="fa-solid fa-pen"></i> Add Contact</a>
+
       <a href="#" class="item"> <i class="fa-solid fa-gears"></i> Settings</a>
+
       <a th:href="@{/logout}" href="#" class="item">
-        <i class="fa-solid fa-right-from-bracket"></i> Logout</a
-      >
+        <i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        
       <div class="divider"></div>
     </div>
 

@@ -1,14 +1,97 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboard</title>
-</head>
-<body>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="normal/base::Layout(~{::section})"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Contact Manager</title>
+  </head>
+
+  <body>
     <section>
-        <h1 th:text="${user.name}">hello from ajay</h1>
-        <h2>this is dashboard private page</h2>
+      <div class="container">
+        <div class="card">
+          <div class="card-body">
+            <!-- image for Dashboard -->
+            <div class="container text-center">
+              <img
+                style="height: 200px; width: 200px"
+                class="my_profile_picture"
+                th:src="@{'/img/'+${user.imageUrl}}"
+                alt="profile_photo"
+              />
+            </div>
+
+            <!-- Welcome Banner -->
+            <h1
+              class="text-center text-secondary font-italic font-weight-light"
+            >
+              Welcome, <span th:text="${user.name}">User</span>!
+            </h1>
+            <p class="text-center text-secondary font-weight-light">
+              Manage your contacts, view statistics, and customize your profile
+              from here, Start adding your contact on cloud...
+            </p>
+
+            <!-- Dashboard Stats -->
+
+            <div th:if="${contacts.size() == 0}"> 
+                <p>Add your first contact</p>
+                <a th:href="@{/user/add-contact}" class="item">
+                    <i class="fa-solid fa-plus" style="color: rgb(33, 88, 209);"></i>
+                </a>
+            </div>
+            <div th:unless="${contacts.size() == 0}">
+                <p>Total Contacts</p>
+                <span th:text="${contacts.size()}"></span>
+                <p>Add More Contacts</p>
+                <a th:href="@{/user/add-contact}" class="item">
+                    <i class="fa-solid fa-plus" style="color: rgb(33, 88, 209);"></i>
+                </a>
+            </div>
+            
+
+
+            <!-- Quick Actions Section -->
+            <div class="quick-actions">
+              <h2>Quick Actions</h2>
+              <a th:href="@{/user/add-contact}" class="btn btn-success btn-sm">Add New Contact</a>
+              <a th:href="@{/user/show-contacts}" class="btn btn-success btn-sm">View All Contacts</a>
+              <a th:href="@{'/user/updateUser/' + ${user.id}}" class="btn btn-success btn-sm">Edit Profile</a>
+            </div>
+            <!-- Recent Contacts Table -->
+            <!-- <div class="recent-contacts">
+                        <h2>Recent Contacts</h2>
+                        <table class="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="contact : ${contacts}">
+                                    <td th:text="${contact.name}">Name</td>
+                                    <td th:text="${contact.secondName}">secondName</td>
+                                    <td th:text="${contact.email}">Email</td>
+                                    <td th:text="${contact.phone}">Phone</td>
+                                    <td>
+                                        <a th:href="@{'/contacts/view/' + ${contact.id}}" class="view-btn">View</a>
+                                        <a th:href="@{'/contacts/edit/' + ${contact.id}}" class="edit-btn">Edit</a>
+                                        <a th:href="@{'/contacts/delete/' + ${contact.id}}" class="delete-btn" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+          </div>
+        </div>
+      </div>
     </section>
-</body>
+  </body>
 </html>

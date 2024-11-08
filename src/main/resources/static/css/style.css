@@ -137,3 +137,24 @@ body{
   font-size: 0.9rem;
 }
 /* ===============//=========== */
+
+/* css for My profile page */
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Adjust space between items */
+  gap: 10px; /* Optional: Adds space between items */
+}
+
+.header-row h1 {
+  flex-grow: 1; /* Makes the heading take up available space */
+  text-align: center; /* Centers the heading text */
+  margin: 0;
+}
+
+.header-row .item {
+  display: flex;
+  align-items: center;
+}
+
+

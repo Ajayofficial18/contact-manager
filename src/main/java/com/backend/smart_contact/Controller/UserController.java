@@ -47,8 +47,13 @@ public class UserController {
 
     // dashboard handler
     @RequestMapping("/index")
-    public String dashboardHandler(Model model) {
-        model.addAttribute("Tittle", "User Dashboard - ContactManager");
+    public String dashboardHandler(Model m, Principal principal) {
+        // we need to send all the contact of this user
+        String username = principal.getName();
+        User user = this.userRepoObj.getUserByUserName(username);
+        List<Contact> allContacts = this.contactRepoObj.findContactByUser(user.getId());
+        m.addAttribute("contacts", allContacts);
+        m.addAttribute("Tittle", "User Dashboard - ContactManager");
         return "normal/dashboard";
     }
 
@@ -211,8 +216,10 @@ public class UserController {
 
     // profile handler
     @GetMapping("/profile")
-    public String profileHandler(Model m){
-        m.addAttribute("Tittle", "User Profile");
+    public String profileHandler(Model m, Principal principal){
+        String username = principal.getName();
+        User user = userRepoObj.getUserByUserName(username);
+        m.addAttribute("Tittle", "User "+user.getName());
         return "normal/profile";
     }
     

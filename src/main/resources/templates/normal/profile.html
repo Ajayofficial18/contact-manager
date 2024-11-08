@@ -14,7 +14,21 @@
       <div class="container text-center">
         <div class="card">
           <div class="card-body">
-            <div class="box text-center">
+
+            <!-- heading -->
+            <div class="header-row">
+              <a th:href="@{/user/index}" href="#" class="item">
+                  <i class="fa-solid fa-arrow-left" style="color: black;"></i>
+              </a>
+              <h1 class="text-center">My Profile</h1>
+              <a th:href="@{'/user/updateUser/' + ${user.id}}" class="item">
+                  <i class="fa-solid fa-pencil" style="color: black;"></i>
+              </a>
+            </div>
+          
+
+            <!-- image -->
+            <div class="box text-center mt-1">
               <img
                 style="height: 200px; width: 200px"
                 class="my_profile_picture"
@@ -22,8 +36,9 @@
                 alt="profile_photo"
               />
             </div>
-
-            <h1 class="text-center" th:text="${user.name}"></h1>
+            
+            <!-- name of the user -->
+            <h1 class="text-center text-secondary font-italic font-weight-light" th:text="${user.name}"></h1>
 
             <table class="table text-center">
               <thead>
@@ -53,15 +68,6 @@
                 </tr>
               </tbody>
             </table>
-
-            <div>
-              <a th:href="@{/user/index}" class="btn btn-primary btn-sm mt-3">Back</a>
-              <a
-                th:href="@{'/user/updateUser/' + ${user.id}}"
-                class="btn btn-success btn-sm mt-3"
-                >Edit</a
-              >
-            </div>
           </div>
         </div>
       </div>
