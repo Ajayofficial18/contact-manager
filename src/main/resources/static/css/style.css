@@ -97,3 +97,43 @@ body{
   object-fit: cover;
   border-radius: 50%;
 }
+
+/* ===============//=========== */
+/* About page Css */
+.about-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-container h1, 
+.about-container h2, 
+.about-container h3 {
+  color: #4CAF50;
+  text-align: center;
+}
+
+.about-container p {
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.about-container ul {
+  list-style-type: disc;
+  margin: 10px 20px;
+  padding: 0;
+  color: #333;
+}
+
+.about-container .footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #777;
+  font-size: 0.9rem;
+}
+/* ===============//=========== */
