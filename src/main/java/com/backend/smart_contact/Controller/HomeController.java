@@ -84,6 +84,7 @@ public class HomeController {
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("user", user);
+            model.addAttribute("Tittle", "Register");
             // Add error message as a flash attribute
             redirectAttributes.addFlashAttribute("message", new Message("Something went Wrong !!", "alert-danger"));
             return "redirect:/signup";

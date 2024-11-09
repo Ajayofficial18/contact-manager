@@ -16,25 +16,27 @@
 </head>
 <body>
     <section>
-        <div class="container text-center">
+        <div class="container">
             <div class="card">
                 <div class="card-body">
 
-                    <form action="#"
+                    <form 
                                 th:object="${user}"
                                 enctype="multipart/form-data"
                                 method="POST"
-                                th:action="@{'/user/update-contact/' + ${user.id}}"
+                                th:action="@{'/user/update-user/' + ${user.id}}"
                                 class="mt-2">
 
                         <!-- Profile Image Editing -->
                         
-                        <div class="box text-center">
-                            <img id="profileImage" style="height: 200px; width: 200px; cursor: pointer;" class="my_profile_picture" th:src="@{'/img/'+${user.imageUrl}}" alt="profile_photo">
-                            <input type="file" name="profileImage" id="imageInput" style="display: none;">
+                        <div class="box">
+                            <img src="/img/contact.png" alt="profile_photo" style="height: 100px; width: 100px;">
+                            <div class="custom-file">
+                                <input type="file" name="profileImage">
+                            </div>
                         </div>
 
-                        <h1 class="text-center" contenteditable="true" id="name" th:text="${user.name}"></h1>
+                        <h1 th:text="${user.name}"></h1>
 
                         <table class="table text-center">
                             <thead>
@@ -46,24 +48,24 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">Email</th>
-                                    <td><span contenteditable="true" id="email" th:text="${user.email}"></span></td>
+                                    <td><span th:text="${user.email}"></span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Role</th>
-                                    <td><span id="role" th:text="${user.role}"></span></td>
+                                    <td><span th:text="${user.role}"></span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Account Active</th>
-                                    <td><span id="enabled" th:text="${user.enabled}"></span></td>
+                                    <td><span th:text="${user.enabled}"></span></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">About</th>
-                                    <td><span contenteditable="true" id="about" th:text="${user.about}"></span></td>
+                                    <td><span th:text="${user.about}"></span></td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <button class="btn btn-success btn-sm mt-3" onclick="saveChanges()">Save</button>
+                        <button type="submit" class="btn btn-success btn-sm mt-3">Save</button>
                     </form>
                 </div>
             </div>

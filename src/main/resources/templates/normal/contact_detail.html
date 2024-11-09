@@ -9,6 +9,9 @@
     <section>
         <div class="card mr-3 ml-3">
             <div class="card-body">
+                <a th:href="@{/user/show-contacts}" href="#" class="item">
+                    <i class="fa-solid fa-arrow-left" style="color: black;"></i>
+                </a>
                 <div class="container text-center">
 
                     <!-- image on top -->
@@ -49,7 +52,6 @@
                     <!-- <button class="btn btn-success btn-sm mt-3">Update</button> -->
                     <a th:href="@{'/user/updateContact/' + ${contact.cId}}" class="btn btn-success btn-sm mt-3">Update</a>
                 </div>
-                <a th:href="@{/user/index}" class="btn btn-primary btn-sm mt-3">Back</a>
             </div>
         </div>
     </section>

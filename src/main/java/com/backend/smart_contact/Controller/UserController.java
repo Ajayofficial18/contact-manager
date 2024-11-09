@@ -171,7 +171,7 @@ public class UserController {
         }
     }
 
-    // process-update handler
+    // Contact Update-process handler
     @PostMapping("/update-contact/{cId}")
     public String updateContact(@PathVariable("cId") int cId, @ModelAttribute Contact contactdata, @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes) {
         Optional<Contact> optional = this.contactRepoObj.findById(cId);
@@ -228,12 +228,53 @@ public class UserController {
     public String updateUserHandler(@PathVariable("id") int id, Model m){
         Optional<User> userOptional=userRepoObj.findById(id);
         if(userOptional.isPresent()){
-            m.addAttribute("user", userOptional.get());
             m.addAttribute("Tittle", "Edit User");
             return "normal/editProfile";
         }else {
             // Handle case where the user is not found
             return "redirect:/user/profile"; // Redirect if user is not found
         }
+    }
+
+    // User update-process handler
+    @PostMapping("/update-user/{id}")
+    public String updateUserProcessHandler(@PathVariable("id") int id, @ModelAttribute User userUpdated, @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes){
+        Optional<User> optional=this.userRepoObj.findById(id);
+        if (optional.isPresent()) {
+            User user=optional.get();
+            user.setName(userUpdated.getName());
+            user.setEmail(userUpdated.getEmail());
+            user.setRole(userUpdated.getRole());
+            user.setEnabled(userUpdated.getEnabled());
+            user.setAbout(userUpdated.getAbout());
+            try {
+                if (file.isEmpty()) {
+                    System.out.println("file is empty");
+                    userUpdated.setImageUrl("contact.png");
+                } else {
+                    userUpdated.setImageUrl(file.getOriginalFilename());
+                    File saveFile = new ClassPathResource("static/img").getFile();
+                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("img is uploaded");
+                } 
+            }
+            catch (Exception e) {
+                System.out.println("Error : " + e.getMessage());
+                e.printStackTrace();
+            }
+            
+            user.setImageUrl(userUpdated.getImageUrl());
+            user.setContacts(userUpdated.getContacts());
+            this.userRepoObj.save(user);
+
+            redirectAttributes.addFlashAttribute("message", "user updated Successfully...");
+            redirectAttributes.addFlashAttribute("alertType", "success");
+        } 
+        else {
+            redirectAttributes.addFlashAttribute("message", "User not found!");
+            redirectAttributes.addFlashAttribute("alertType", "danger");
+        }
+        return "redirect:/user/profile";
     }
 }
