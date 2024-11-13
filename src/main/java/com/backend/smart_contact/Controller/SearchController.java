@@ -27,9 +27,10 @@ public class SearchController {
     @GetMapping("/search/{query}")
     public ResponseEntity<?> search(@PathVariable("query") String query, Principal principal){
 
-        System.out.println(query);
+        // System.out.println(query);
         User user=this.userRepo.getUserByUserName(principal.getName());
         List<Contact> contacts=this.contactRepo.findByNameContainingAndUser(query,user);
+        // System.out.println(contacts);
 
         return ResponseEntity.ok(contacts);
     }
