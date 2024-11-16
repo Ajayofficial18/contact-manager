@@ -11,6 +11,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -109,15 +112,18 @@ public class UserController {
     }
 
     // show or view contacts
-    @GetMapping("/show-contacts")
-    public String viewContactsHandler(Model m, Principal principal){
+    @GetMapping("/show-contacts/{page}")
+    public String viewContactsHandler(@PathVariable("page") Integer page,Model m, Principal principal){
         
         m.addAttribute("Tittle", "All Contacts - ContactManager");
         // we need to send all the contact of this user
         String username = principal.getName();
         User user = this.userRepoObj.getUserByUserName(username);
-        List<Contact> allContacts = this.contactRepoObj.findContactByUser(user.getId());
+        Pageable pageable=PageRequest.of(page,5);
+        Page<Contact> allContacts = this.contactRepoObj.findContactByUser(user.getId(),pageable);
         m.addAttribute("allContacts", allContacts);
+        m.addAttribute("currentPage", page);
+        m.addAttribute("totalPages", allContacts.getTotalPages());
 
         return "normal/show_contacts";
     }
