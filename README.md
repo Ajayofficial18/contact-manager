@@ -8,14 +8,14 @@
 - Contact Management (Add, Update, Delete Contacts)
 - Server-side validation for input fields
 - Flash messages for feedback
-- Data persistence using MySQL
+- Data persistence using Postgres
 - Responsive UI with Bootstrap
 
 ## Technologies Used
 
 - **Spring Boot**: Backend framework
 - **Thymeleaf**: Server-side rendering engine for HTML
-- **MySQL**: Database for storing user and contact information
+- **Postgres**: Database for storing user and contact information
 - **Jakarta Validation**: For server-side form validation
 - **Bootstrap 4**: For responsive front-end design
 
@@ -24,7 +24,7 @@
 ### Prerequisites
 
 - Java 17 or higher
-- MySQL
+- Postgres
 - Maven
 
 ### Installation Steps
@@ -36,8 +36,8 @@
 2. Navigate to the project directory:
    cd contact-management
 
-3. Update your MySQL credentials in application.properties:
-   spring.datasource.url=jdbc:mysql://localhost:3306/contact-manager
+3. Update your Postgres credentials in application.properties:
+   spring.datasource.url=jdbc:postgresql://localhost:5432/contact-manager
    spring.datasource.username=your-username
    spring.datasource.password=your-password
 
@@ -48,7 +48,7 @@
 
 ### Database Setup
 
-- Use the following schema for your MySQL database:
+- Use the following schema for your Postgres database:
 - CREATE DATABASE contact_manager;
 - Tables are automatically created by JPA upon application startup.
 
