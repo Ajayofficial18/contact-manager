@@ -108,7 +108,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("alertType", "danger");
         }
 
-        return "redirect:/user/show-contacts"; // Redirect after processing the form
+        return "redirect:/user/show-contacts/0"; // Redirect after processing the form
     }
 
     // show or view contacts
@@ -160,7 +160,7 @@ public class UserController {
         }
 
         // Redirect back to the contact list
-        return "redirect:/user/show-contacts";
+        return "redirect:/user/show-contacts/0";
     }
 
     // updating a contact handler
@@ -173,7 +173,7 @@ public class UserController {
             return "normal/update_contact"; // Make sure this template exists
         } else {
             // Handle case where the contact is not found
-            return "redirect:/user/show-contacts"; // Redirect if contact is not found
+            return "redirect:/user/show-contacts/0"; // Redirect if contact is not found
         }
     }
 
@@ -217,7 +217,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", "Contact not found!");
             redirectAttributes.addFlashAttribute("alertType", "danger");
         }
-        return "redirect:/user/show-contacts";
+        return "redirect:/user/show-contacts/0";
     }
 
     // profile handler
