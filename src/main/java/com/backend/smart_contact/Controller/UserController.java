@@ -1,6 +1,7 @@
 package com.backend.smart_contact.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -178,47 +179,97 @@ public class UserController {
     }
 
     // Contact Update-process handler
-    @PostMapping("/update-contact/{cId}")
-    public String updateContact(@PathVariable("cId") int cId, @ModelAttribute Contact contactdata, @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes) {
-        Optional<Contact> optional = this.contactRepoObj.findById(cId);
+    // @PostMapping("/update-contact/{cId}")
+    // public String updateContact(@PathVariable("cId") int cId, @ModelAttribute Contact contactdata, @RequestParam("profileImage") MultipartFile file, RedirectAttributes redirectAttributes) {
+    //     Optional<Contact> optional = this.contactRepoObj.findById(cId);
         
-        if (optional.isPresent()) {
-            Contact contact = optional.get();
-            // Update logic here
-            contact.setName(contactdata.getName());
-            contact.setSecondName(contactdata.getSecondName());
-            contact.setWork(contactdata.getWork());
-            contact.setEmail(contactdata.getEmail());
-            contact.setPhone(contactdata.getPhone());
-            // contact.setImage(contactdata.getImage());// this is not working
-            try {
-                if (file.isEmpty()) {
-                    System.out.println("file is empty");
-                    contactdata.setImage("contact.png");
-                } else {
-                    contactdata.setImage(file.getOriginalFilename());
-                    File saveFile = new ClassPathResource("static/img").getFile();
-                    Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
-                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("img is uploaded");
-                } 
-            } 
-            catch (Exception e) {
-                System.out.println("Error : " + e.getMessage());
-                e.printStackTrace();
-            }
-            contact.setImage(contactdata.getImage());
-            contact.setDescription(contactdata.getDescription());
-            this.contactRepoObj.save(contact);
+    //     if (optional.isPresent()) {
+    //         Contact contact = optional.get();
+    //         // Update logic here
+    //         contact.setName(contactdata.getName());
+    //         contact.setSecondName(contactdata.getSecondName());
+    //         contact.setWork(contactdata.getWork());
+    //         contact.setEmail(contactdata.getEmail());
+    //         contact.setPhone(contactdata.getPhone());
+    //         // contact.setImage(contactdata.getImage());// this is not working
+    //         try {
+    //             if (file.isEmpty()) {
+    //                 System.out.println("file is empty");
+    //                 contactdata.setImage("contact.png");
+    //             } else {
+    //                 contactdata.setImage(file.getOriginalFilename());
+    //                 File saveFile = new ClassPathResource("static/img").getFile();
+    //                 Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + file.getOriginalFilename());
+    //                 Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+    //                 System.out.println("img is uploaded");
+    //             } 
+    //         } 
+    //         catch (Exception e) {
+    //             System.out.println("Error : " + e.getMessage());
+    //             e.printStackTrace();
+    //         }
+    //         contact.setImage(contactdata.getImage());
+    //         contact.setDescription(contactdata.getDescription());
+    //         this.contactRepoObj.save(contact);
 
-            redirectAttributes.addFlashAttribute("message", "Contact updated Successfully...");
-            redirectAttributes.addFlashAttribute("alertType", "success");
-        } else {
-            redirectAttributes.addFlashAttribute("message", "Contact not found!");
-            redirectAttributes.addFlashAttribute("alertType", "danger");
+    //         redirectAttributes.addFlashAttribute("message", "Contact updated Successfully...");
+    //         redirectAttributes.addFlashAttribute("alertType", "success");
+    //     } else {
+    //         redirectAttributes.addFlashAttribute("message", "Contact not found!");
+    //         redirectAttributes.addFlashAttribute("alertType", "danger");
+    //     }
+    //     return "redirect:/user/show-contacts/0";
+    // }
+
+
+    @PostMapping("/update-contact/{cId}")
+public String updateContact(@PathVariable("cId") int cId, 
+                            @ModelAttribute Contact contactdata, 
+                            @RequestParam("profileImage") MultipartFile file, 
+                            RedirectAttributes redirectAttributes) {
+    Optional<Contact> optional = this.contactRepoObj.findById(cId);
+
+    if (optional.isPresent()) {
+        Contact contact = optional.get();
+
+        // Update contact details
+        contact.setName(contactdata.getName());
+        contact.setSecondName(contactdata.getSecondName());
+        contact.setWork(contactdata.getWork());
+        contact.setEmail(contactdata.getEmail());
+        contact.setPhone(contactdata.getPhone());
+        contact.setDescription(contactdata.getDescription());
+
+        try {
+            if (!file.isEmpty()) {
+                // Save the file to the server directory
+                String uploadDir = "/home/contact-manager/images"; // Server directory
+                File dir = new File(uploadDir);
+                if (!dir.exists()) dir.mkdirs(); // Create directory if it doesn't exist
+
+                // Save the file
+                Path path = Paths.get(uploadDir, file.getOriginalFilename());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+                contact.setImage(file.getOriginalFilename()); // Save filename in the database
+            }
+        } catch (IOException e) {
+            System.out.println("Error saving file: " + e.getMessage());
+            e.printStackTrace();
         }
-        return "redirect:/user/show-contacts/0";
+
+        // Save updated contact
+        this.contactRepoObj.save(contact);
+
+        redirectAttributes.addFlashAttribute("message", "Contact updated successfully.");
+        redirectAttributes.addFlashAttribute("alertType", "success");
+    } else {
+        redirectAttributes.addFlashAttribute("message", "Contact not found!");
+        redirectAttributes.addFlashAttribute("alertType", "danger");
     }
+    return "redirect:/user/show-contacts/0";
+}
+
 
     // profile handler
     @GetMapping("/profile")

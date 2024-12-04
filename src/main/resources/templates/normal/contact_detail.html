@@ -16,7 +16,9 @@
                 <div class="container text-center">
 
                     <!-- image on top -->
-                    <img style="height: 200px; width: 200px;" class="my_profile_picture" th:src="@{'/img/'+${contact.image}}" alt="profile_photo">
+                    <!-- <img style="height: 200px; width: 200px;" class="my_profile_picture" th:src="@{'/img/'+${contact.image}}" alt="profile_photo"> -->
+                    <img style="height: 200px; width: 200px;" class="my_profile_picture" th:src="@{'/images/' + ${contact.image}}" alt="profile_photo">
+
 
                     <!-- name of the user -->
                     <h3 class="mt-3" ><span th:text="${contact.name}"></span></h3>
