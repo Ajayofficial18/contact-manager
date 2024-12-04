@@ -23,7 +23,8 @@ const search=()=>{
         $(".search-result").hide();
     }else{
         console.log(query);
-        let url = `http://localhost:8080/search/${query}`;
+        let baseUrl = window.location.origin;
+        let url = `${baseUrl}/search/${query}`;
         fetch(url).then((response)=>{
             return response.json();
         })

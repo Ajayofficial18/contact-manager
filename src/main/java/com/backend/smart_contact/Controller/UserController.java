@@ -190,7 +190,7 @@ public class UserController {
             contact.setWork(contactdata.getWork());
             contact.setEmail(contactdata.getEmail());
             contact.setPhone(contactdata.getPhone());
-            contact.setImage(contactdata.getImage());// this is not working
+            // contact.setImage(contactdata.getImage());// this is not working
             try {
                 if (file.isEmpty()) {
                     System.out.println("file is empty");
