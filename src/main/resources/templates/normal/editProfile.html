@@ -27,7 +27,7 @@
             <!-- Profile Image Editing -->
 
             <div class="box">
-              <img src="/img/contact.png" alt="profile_photo" style="height: 100px; width: 100px" />
+              <img th:src="@{'/images/' + ${user.imageUrl}}" alt="profile_photo" style="height: 100px; width: 100px" />
               <div class="custom-file">
                 <input type="file" name="profileImage" />
               </div>
